@@ -50,7 +50,7 @@ define(["util", "vbo"],
         window.console.log("Creating a unit Cube."); 
     
         // generate points and store in an array
-        var coords = [ 
+        var vertices = [ 
                        // front
                        -0.5, -0.5,  0.5,  // A: index 0
                         0.5, -0.5,  0.5,  // B: index 1
@@ -106,6 +106,15 @@ define(["util", "vbo"],
                         0.5, -0.5,  0.5   // B'': index 23
                      ];
         
+        var indices = [
+                                 0,  1,  2,      0,  2,  3,    // front
+                                 4,  5,  6,      4,  6,  7,    // back
+                                 8,  9,  10,     8,  10, 11,   // top
+                                 12, 13, 14,     12, 14, 15,   // bottom
+                                 16, 17, 18,     16, 18, 19,   // right
+                                 20, 21, 22,     20, 22, 23    // left
+                               ]
+        
         var colors = [
                       [1.0,  1.0,  1.0,  1.0],    // Front face: white
                       [1.0,  0.0,  0.0,  1.0],    // Back face: red
@@ -113,15 +122,18 @@ define(["util", "vbo"],
                       [0.0,  0.0,  1.0,  1.0],    // Bottom face: blue
                       [1.0,  1.0,  0.0,  1.0],    // Right face: yellow
                       [1.0,  0.0,  1.0,  1.0]     // Left face: purple
-                     ];
+                    ];
+        
+        var generatedColors = [];
                                           
         // therer are 3 floats per vertex, so...
-        this.numVertices = coords.length / 3;
+        this.numVertices = vertices.length / 3;
+        this.numIndices = indices.length / 3;
         
         // create vertex buffer object (VBO) for the coordinates
         this.coordsBuffer = new vbo.Attribute(gl, { "numComponents": 3,
                                                     "dataType": gl.FLOAT,
-                                                    "data": coords 
+                                                    "data": vertices 
                                                   } );
         
         // create vertex buffer object (VBO) for the colors
@@ -130,18 +142,40 @@ define(["util", "vbo"],
                                                    "data": colors 
                                                   } );
         
+        this.colorBuffer = new vbo.Attribute(gl, { "numComponents": 3,
+										            "dataType": gl.FLOAT,
+										            "data": indices 
+										           } );
+        
+        
     };
 
     // draw method clears color buffer and optionall depth buffer
     Cube.prototype.draw = function(gl,program) {
-    
+       
+//        for (var j=0; j<6; j++) {
+//          var c = colors[j];
+//           
+//          for (var i=0; i<4; i++) {
+//            generatedColors = generatedColors.concat(c);
+//          }
+//        }
+    	
+//    	cubeVerticesColorBuffer = gl.createBuffer();
+//    	gl.bindBuffer(gl.ARRAY_BUFFER, cubeVerticesColorBuffer);
+//    	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(generatedColors), gl.STATIC_DRAW);
+//    	gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(cubeVertexIndices), gl.STATIC_DRAW);
+//    	
+//    	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cubeVerticesIndexBuffer);
+//    	setMatrixUniforms();
+    	
         // bind the attribute buffers
         this.coordsBuffer.bind(gl, program, "vertexPosition");
         this.colorBuffer.bind(gl, program, "vertexColor");
                 
         // draw the vertices as points
-        gl.drawArrays(gl.TRIANGLES, 0, this.coordsBuffer.numVertices()); 
-        //gl.drawElements(gl.TRIANGLES, this.coordsBuffer.numVertices(), gl.UNSIGNED_SHORT, 0);
+//        gl.drawArrays(gl.TRIANGLES, 0, this.coordsBuffer.numVertices()); 
+    	gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
          
     };
         
