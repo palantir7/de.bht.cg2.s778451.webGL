@@ -159,8 +159,7 @@ define(["util", "vbo"],
         this.colorBuffer.bind(gl, program, "vertexColor");
         this.indiceBuffer.bind(gl);
         
-        // draw the vertices as points
-        //gl.drawArrays(gl.TRIANGLES, 0, this.coordsBuffer.numVertices()); 
+        // draw
         gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
          
     };

@@ -165,7 +165,7 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
                 this.band     = new Band(gl, { radius: 0.4, height: 0.2, segments: 50 } );
                 
                 // for the UI - this will be accessed directly by HtmlController
-                this.drawOptions = { "Triangle": true, 
+                this.drawOptions = { "Triangle": false, 
                                      "Cube": false, 
                                      "Band": false,
                                    };
