@@ -37,7 +37,7 @@ requirejs.config({
 /* requireJS module definition */
 define(["jquery", "gl-matrix", "util", "webgl-debug", 
         "program", "shaders", "animation", "html_controller", 
-        "models/triangle", "models/cube", "models/band"], 
+        "models/triangle", "models/cube", "models/band" ], 
        (function($, glmatrix, util, WebGLDebugUtils, 
                     Program, shaders, Animation, HtmlController, 
                     Triangle, Cube, Band ) {
@@ -167,7 +167,7 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
                 // for the UI - this will be accessed directly by HtmlController
                 this.drawOptions = { "Triangle": false, 
                                      "Cube": false, 
-                                     "Band": false,
+                                     "Band": true 
                                    };
                 
             };
@@ -210,7 +210,7 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
                     this.cube.draw(gl, this.prog_vertexColor);
                 };
                 if(this.drawOptions["Band"]) {
-                    this.band.draw(gl, this.prog_red);
+                    this.band.draw(gl, this.prog_vertexColor);
                 };
             };
             

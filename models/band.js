@@ -94,6 +94,64 @@ define(["util", "vbo"],
             
         };
         
+        // Wireframe Points
+        var coordsW = [];
+        // first points
+        var f1 = [0,0,0];
+        var f2 = [0,0,0];
+        // previous points
+        var a1 = [0,0,0];
+        var a2 = [0,0,0];	
+        for(var i=0; i <= segments; i++) {
+            
+        	// X and Z coordinates are on a circle around the origin
+            var t = (i/segments)*Math.PI*2;
+            var x0 = Math.sin(t) * radius;
+            var z0 = Math.cos(t) * radius;
+            // Y coordinates are simply -height/2 and +height/2 
+            var y0 = height/2;
+            var y1 = -height/2;
+            
+            // add two points for each position on the circle
+            // IMPORTANT: push each float value separately!
+            
+            if (i == 0) {   
+            	// first segment
+            	f1[0] = x0;
+            	f1[1] = y0;
+            	f1[2] = z0;
+            	
+            	f2[0] = x0;
+            	f2[1] = y1;
+            	f2[2] = z0;
+            } 
+            if (i == 1) {
+            	// first segments
+                coordsW.push(x0,y0,z0);			 // C: index 2
+                coordsW.push(f1[0],f1[1],f1[2]); // A: index 0
+            	coordsW.push(f2[0],f2[1],f2[2]); // B: index 1
+            	coordsW.push(x0,y1,z0); 		 // D: index 3
+            }
+            
+            if (i <= segments && i > 1){
+            	// other segment 
+            	coordsW.push(x0,y1,z0); 		 // D: index 3
+                coordsW.push(x0,y0,z0); 		 // C: index 2
+                coordsW.push(a1[0],a1[1],a1[2]); // A: index 0
+            	coordsW.push(a2[0],a2[1],a2[2]); // B: index 1
+            }
+         	
+            // buffer previous points
+        	a1[0] = x0;
+        	a1[1] = y0;
+        	a1[2] = z0;
+        	
+        	a2[0] = x0;
+        	a2[1] = y1;
+        	a2[2] = z0;
+            
+        };
+        
         var cLenght  = coords.length;
         var indices = [];
         var i = 4;
@@ -115,16 +173,51 @@ define(["util", "vbo"],
         	i = i + 4;
         }
         
+        var cLenght  = coordsW.length;
+        var indicesW = [];
+        var i = 4;
+        while(i < cLenght) {
+        	
+        	var num1 = i - 4; // A
+        	var num2 = i - 3; // B
+        	var num3 = i - 2; // C
+        	var num4 = i - 1; // D
+        	
+        	// adding indices
+        	indicesW.push(num1); // A
+        	indicesW.push(num2); // B
+        	indicesW.push(num3); // C
+
+        	indicesW.push(num2); // B
+        	indicesW.push(num3); // C
+        	indicesW.push(num4); // D
+        	i = i + 4;
+        }
+        
         var iLenght  = indices.length;
         var colors = [];
         for(var i=0; i <= iLenght; i++) {
-     
-	    	var r = 1.0 - (i / 150);
-	    	var g = 1.0 - (i / 150);
-	    	var b = 1.0 - (i / 150);
-	    	var a = 1.0;
+        	
+	    	var r = 1.0;
+	    	var g = 0.0;
+	    	var b = 0.0;
+	    	var a = 2.5;
         	
         	colors.push(r,g,b,a); 
+        }
+        
+        var iLenght  = indicesW.length;
+        var colorsW = [];
+        for(var i=0; i <= iLenght; i++) {
+        	
+        	var mod = (i / iLenght * 5);
+        	
+	    	var r = 0.0;
+	    	var g = 0.0;
+	    	var b = 0.0;
+	    	var a = 1.0;
+        	
+        	colorsW.push(r,g,b,a); 
         }
 	                   
 
@@ -138,10 +231,22 @@ define(["util", "vbo"],
                                                     "data": coords 
                                                   } );
         
+        // create vertex buffer object (VBO) for the coordinates (wireframe)
+        this.coordsWBuffer = new vbo.Attribute(gl, { "numComponents": 3,
+                                                    "dataType": gl.FLOAT,
+                                                    "data": coordsW 
+                                                  } );
+        
         // create vertex buffer object (VBO) for the colors
         this.colorBuffer = new vbo.Attribute(gl, { "numComponents": 4,
                                                    "dataType": gl.FLOAT,
                                                    "data": colors 
+                                                  } );
+        
+        // create vertex buffer object (VBO) for the colors
+        this.colorWBuffer = new vbo.Attribute(gl, { "numComponents": 4,
+                                                   "dataType": gl.FLOAT,
+                                                   "data": colorsW 
                                                   } );
         
         // create vertex buffer object (VBO) for the indices
@@ -154,15 +259,18 @@ define(["util", "vbo"],
 
         var numSegments = this.numSegments;        
     
-        // bind the attribute buffers
+        // Normal
         this.coordsBuffer.bind(gl, program, "vertexPosition");
         this.colorBuffer.bind(gl, program, "vertexColor");
         this.indiceBuffer.bind(gl);
- 
-        // draw the vertices as points
-        //gl.drawArrays(gl.LINE_STRIP, 0, this.coordsBuffer.numVertices());
         gl.drawElements(gl.TRIANGLES, numSegments, gl.UNSIGNED_SHORT, 0);
-         
+ 
+        // WireFrame
+        this.coordsWBuffer.bind(gl, program, "vertexPosition");
+        this.colorWBuffer.bind(gl, program, "vertexColor");
+        gl.drawArrays(gl.LINE_STRIP, 0, this.coordsWBuffer.numVertices());
+        
+        gl.polygonOffset(1.0, 1.0);
 
     };
         
