@@ -199,6 +199,7 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
                 // clear color and depth buffers
                 gl.clearColor(0.7, 0.7, 0.7, 1.0); 
                 gl.clear(gl.COLOR_BUFFER_BIT |Â gl.DEPTH_BUFFER_BIT); 
+                gl.enable(gl.DEPTH_TEST);
                 
                 // draw the objects
                 // TODO: vertexColor geändert bei Trianle
@@ -206,7 +207,7 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
                     this.triangle.draw(gl, this.prog_vertexColor);
                 };
                 if(this.drawOptions["Cube"]) {
-                    this.cube.draw(gl, this.prog_green);
+                    this.cube.draw(gl, this.prog_vertexColor);
                 };
                 if(this.drawOptions["Band"]) {
                     this.band.draw(gl, this.prog_red);

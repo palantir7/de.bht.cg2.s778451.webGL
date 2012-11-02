@@ -47,7 +47,7 @@ define(["util", "vbo"],
             coords.push(x,y0,z);
             coords.push(x,y1,z);
             
-        };  
+        };
         
         // create vertex buffer object (VBO) for the coordinates
         this.coordsBuffer = new vbo.Attribute(gl, { "numComponents": 3,
@@ -64,7 +64,8 @@ define(["util", "vbo"],
         this.coordsBuffer.bind(gl, program, "vertexPosition");
  
         // draw the vertices as points
-        gl.drawArrays(gl.POINTS, 0, this.coordsBuffer.numVertices()); 
+        //gl.drawArrays(gl.POINTS, 0, this.coordsBuffer.numVertices());
+        gl.drawArrays(gl.TRIANGLES, 0, this.coordsBuffer.numVertices());
          
 
     };
