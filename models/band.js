@@ -260,17 +260,28 @@ define(["util", "vbo"],
         var numSegments = this.numSegments;        
     
         // Normal
-        this.coordsBuffer.bind(gl, program, "vertexPosition");
-        this.colorBuffer.bind(gl, program, "vertexColor");
-        this.indiceBuffer.bind(gl);
-        gl.drawElements(gl.TRIANGLES, numSegments, gl.UNSIGNED_SHORT, 0);
+        if (!this.asWireframe) {
+            // enable offset
+        	gl.enable(gl.POLYGON_OFFSET_FILL);
+        	// GLfloat factor, GLfloat units
+            gl.polygonOffset(1.0, 1.0);
+            
+        	this.coordsBuffer.bind(gl, program, "vertexPosition");
+            this.colorBuffer.bind(gl, program, "vertexColor");
+            this.indiceBuffer.bind(gl);
+            gl.drawElements(gl.TRIANGLES, numSegments, gl.UNSIGNED_SHORT, 0);
+            
+            // disable offset
+            gl.disable(gl.POLYGON_OFFSET_FILL);
+        }        
  
         // WireFrame
-        this.coordsWBuffer.bind(gl, program, "vertexPosition");
-        this.colorWBuffer.bind(gl, program, "vertexColor");
-        gl.drawArrays(gl.LINE_STRIP, 0, this.coordsWBuffer.numVertices());
+        if (this.asWireframe) { 
+	        this.coordsWBuffer.bind(gl, program, "vertexPosition");
+	        this.colorWBuffer.bind(gl, program, "vertexColor");
+	        gl.drawArrays(gl.LINE_STRIP, 0, this.coordsWBuffer.numVertices());
+        }
         
-        gl.polygonOffset(1.0, 1.0);
 
     };
         

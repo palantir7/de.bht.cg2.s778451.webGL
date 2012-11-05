@@ -62,6 +62,9 @@ define(["jquery"],
         $("#anim_Toggle").attr("checked", undefined);
         $("#anim_Speed").attr("value", 20);
         
+        $("#band_Toggle").attr("checked", "checked");
+        $("#band_Segment").attr("value", 50);
+        
         // create one input element for each object in "objects"
         for(var o in scene.drawOptions) {
             

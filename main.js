@@ -78,6 +78,12 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
         
         return gl;
     };
+	
+	var getSegments = function() {
+		var segNum = $("#band_Segment").val();    
+		console.log("Segements:" + segNum);
+		return segNum;
+	}
     
     /*
      * create an animation that rotates the scene around 
@@ -122,11 +128,11 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
      */
 
     $(document).ready( (function() {
-    
+    	
         // catch errors for debugging purposes 
         try {
 
-            console.log("document ready - starting!");
+            console.log("document ready - starting!"); 
             
             // create WebGL context object for the named canvas object
             var gl = makeWebGLContext("drawing_area");
@@ -158,22 +164,25 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
                 this.prog_vertexColor = new Program(gl, 
                                                     shaders.vs_PerVertexColor(), 
                                                     shaders.fs_PerVertexColor() );
-                
+            	
                 // create some objects to be drawn
                 this.triangle = new Triangle(gl);
                 this.cube     = new Cube(gl);
-                this.band     = new Band(gl, { radius: 0.4, height: 0.2, segments: 50 } );
+                this.band     = new Band(gl, { radius: 0.4, height: 0.2, segments: 50, asWireframe: false } );
+                this.wireBand = new Band(gl, { radius: 0.4, height: 0.2, segments: 50, asWireframe: true } );
                 
                 // for the UI - this will be accessed directly by HtmlController
                 this.drawOptions = { "Triangle": false, 
                                      "Cube": false, 
-                                     "Band": true 
+                                     "Band": true,
+                                     "WireBand" : true
                                    };
                 
             };
+            
             // the scene's draw method draws whatever the scene wants to draw
             MyScene.prototype.draw = function() {
-            
+            	
                 // set all the required uniform variables in all used programs
                 var setUniforms = function(program, transformation) {
                 
@@ -212,6 +221,9 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
                 if(this.drawOptions["Band"]) {
                     this.band.draw(gl, this.prog_vertexColor);
                 };
+                if(this.drawOptions["WireBand"]) {
+                    this.wireBand.draw(gl, this.prog_vertexColor);
+                };
             };
             
             // initial transformation - tilt view by 25° from above
@@ -236,7 +248,6 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
             window.console.log("exception: " + (err.message || err));;
             throw err;
         };
-        
         
     })); // $(document).ready()
     
