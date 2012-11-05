@@ -26,7 +26,7 @@
  *
  * We use a right-handed coordinate system with Z pointing towards the 
  * viewer. For example, vertex A (front bottom left) has the coordinates  
- * ( x = -0.5, y = -0.5, z = 0.5 ) . 
+ * ( x = -0.25, y = -0.25, z = 0.25 ) . 
  *
  * The cube only consists of eight different vertex positions; however 
  * for various reasons (e.g. different normal directions) these vertices
@@ -52,40 +52,40 @@ define(["util", "vbo"],
         // generate points and store in an array
         var coords = [ 
                        // front
-                       -0.5, -0.5,  0.5,  // A: index 0
-                        0.5, -0.5,  0.5,  // B: index 1
-                        0.5,  0.5,  0.5,  // C: index 2
-                       -0.5,  0.5,  0.5,  // D: index 3
+                       -0.25, -0.25,  0.25,  // A: index 0
+                        0.25, -0.25,  0.25,  // B: index 1
+                        0.25,  0.25,  0.25,  // C: index 2
+                       -0.25,  0.25,  0.25,  // D: index 3
                        
                        // back
-                       -0.5, -0.5, -0.5,  // E: index 4
-                        0.5, -0.5, -0.5,  // F: index 5
-                        0.5,  0.5, -0.5,  // G: index 6
-                       -0.5,  0.5, -0.5,  // H: index 7
+                       -0.25, -0.25, -0.25,  // E: index 4
+                        0.25, -0.25, -0.25,  // F: index 5
+                        0.25,  0.25, -0.25,  // G: index 6
+                       -0.25,  0.25, -0.25,  // H: index 7
                        
                        // left
-                       -0.5, -0.5,  0.5,  // A': index 8
-                       -0.5,  0.5,  0.5,  // D': index 9
-                       -0.5,  0.5, -0.5,  // H': index 10
-                       -0.5, -0.5, -0.5,  // E': index 11
+                       -0.25, -0.25,  0.25,  // A': index 8
+                       -0.25,  0.25,  0.25,  // D': index 9
+                       -0.25,  0.25, -0.25,  // H': index 10
+                       -0.25, -0.25, -0.25,  // E': index 11
                        
                        // right
-                        0.5, -0.5,  0.5,  // B': index 12
-                        0.5, -0.5, -0.5,  // F': index 13
-                        0.5,  0.5, -0.5,  // G': index 14
-                        0.5,  0.5,  0.5,  // C': index 15
+                        0.25, -0.25,  0.25,  // B': index 12
+                        0.25, -0.25, -0.25,  // F': index 13
+                        0.25,  0.25, -0.25,  // G': index 14
+                        0.25,  0.25,  0.25,  // C': index 15
                        
                        // top
-                       -0.5,  0.5,  0.5,  // D'': index 16
-                        0.5,  0.5,  0.5,  // C'': index 17
-                        0.5,  0.5, -0.5,  // G'': index 18
-                       -0.5,  0.5, -0.5,  // H'': index 19
+                       -0.25,  0.25,  0.25,  // D'': index 16
+                        0.25,  0.25,  0.25,  // C'': index 17
+                        0.25,  0.25, -0.25,  // G'': index 18
+                       -0.25,  0.25, -0.25,  // H'': index 19
 
                        // bottom
-                       -0.5, -0.5,  0.5,  // A'': index 20
-                       -0.5, -0.5, -0.5,  // E'': index 21
-                        0.5, -0.5, -0.5,  // F'': index 22
-                        0.5, -0.5,  0.5   // B'': index 23
+                       -0.25, -0.25,  0.25,  // A'': index 20
+                       -0.25, -0.25, -0.25,  // E'': index 21
+                        0.25, -0.25, -0.25,  // F'': index 22
+                        0.25, -0.25,  0.25   // B'': index 23
                      ];
         
         var indices = [
