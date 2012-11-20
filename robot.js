@@ -128,7 +128,7 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
                 var wristSize		= [0.5 , 0.5 ,  0.5 ];
                 var forearmSize		= [0.5 , 0.5 ,  0.5 ];
                 var elbowSize		= [0.5 , 0.5 ,  0.5 ];
-                var upperarmSize	= [0.18, 0.6 , 0.30 ];
+                var upperarmSize	= [0.30, 0.6 , 0.18 ];
                 var shoulderSize	= [0.15 ,0.15, 0.15 ];
                 
                 // skeleton for the torso - TODO connect shoulders and neck HERE                
@@ -156,46 +156,45 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
                 mat4.scale(torsoSkin.transformation, torsoSize );
                 mat4.rotate(torsoSkin.transformation, Math.PI/2, [1,0,0] );
                 
-                // Skin for the head: a cube...
-                var headSkin = new SceneNode("head skin", [cube], prog_vertexColor);
-                mat4.scale(headSkin.transformation, headSize );
-                mat4.translate(headSkin.transformation, [0,1,0, 0,1,0, 0,1,0]);
-                mat4.rotate(headSkin.transformation, Math.PI/2, [1,0,0] );
+	                // Skin for the head: a cube...
+	                var headSkin = new SceneNode("head skin", [cube], prog_vertexColor);
+	                mat4.scale(headSkin.transformation, headSize );
+	                mat4.translate(headSkin.transformation, [0,1,0, 0,1,0, 0,1,0]);
+	                mat4.rotate(headSkin.transformation, Math.PI/2, [1,0,0] );
                 
-                // Skin for the head: a band...
-                var neckSkin = new SceneNode("neck skin", [band], prog_vertexColor);
-                mat4.scale(neckSkin.transformation, neckSize );
-                mat4.translate(neckSkin.transformation, [0,2,0, 0,2,0, 0,2,0]);
-                mat4.rotate(neckSkin.transformation, Math.PI/2, [0,0,0] );
+		                // Skin for the head: a band...
+		                var neckSkin = new SceneNode("neck skin", [band], prog_vertexColor);
+		                mat4.scale(neckSkin.transformation, neckSize );
+		                mat4.translate(neckSkin.transformation, [0,2,0, 0,2,0, 0,2,0]);
+		                mat4.rotate(neckSkin.transformation, Math.PI/2, [0,0,0] );
                 
-                // Skin for the left shoulder: a band...
-                var leftShoulderSkin = new SceneNode("leftShoulder skin", [band], prog_vertexColor);
-                mat4.scale(leftShoulderSkin.transformation, shoulderSize );
-                // Skeleton
-                mat4.translate(leftShoulder.transformation, [0.16,0.15,0, 0,0,0, 0,0,0]);
-                mat4.rotate(leftShoulder.transformation, Math.PI/2, [0,0,1] );
+	                // Skin for the left shoulder: a band...
+	                var leftShoulderSkin = new SceneNode("leftShoulder skin", [band], prog_vertexColor);
+	                mat4.scale(leftShoulderSkin.transformation, shoulderSize );
+	                // Skeleton
+	                mat4.translate(leftShoulder.transformation, [0.16,0.15,0, 0,0,0, 0,0,0]);
+	                mat4.rotate(leftShoulder.transformation, Math.PI/2, [0,0,1] );
                 
-                // Skin for the left upperarm: a band...
-                // TODO: Neue Koordinaten eingeben !!!
-                var leftUpperarmSkin = new SceneNode("leftUpperarm skin", [cube], prog_vertexColor);
-                mat4.scale(leftUpperarmSkin.transformation, upperarmSize );
-                // Skeleton
-                mat4.translate(leftUpperarm.transformation, [0.16,0.15,0, 0,0,0, 0,0,0]);
-                mat4.rotate(leftUpperarm.transformation, -Math.PI/4, [1,0,0] );
+		                // Skin for the left upperarm: a band...
+		                var leftUpperarmSkin = new SceneNode("leftUpperarm skin", [cube], prog_vertexColor);
+		                mat4.scale(leftUpperarmSkin.transformation, upperarmSize );
+		                // Skeleton
+		                mat4.translate(leftUpperarm.transformation, [0.0,-0.05,0.15, 0,0,0, 0,0,0]);
+		                mat4.rotate(leftUpperarm.transformation, Math.PI/2, [1,0,0] );
                 
-                // Skin for the right shoulder: a band...
-                var rightShoulderSkin = new SceneNode("rightShoulder skin", [band], prog_vertexColor);
-                mat4.scale(rightShoulderSkin.transformation, shoulderSize );
-                // Skeleton
-                mat4.translate(rightShoulder.transformation, [-0.16,0.15,0, 0,0,0, 0,0,0]);
-                mat4.rotate(rightShoulder.transformation, Math.PI/2, [0,0,1] );
-                
-                // Skin for the hand: a triangle...
-                // TODO: ...
-                var handSkin = new SceneNode("hand skin", [triangle], prog_vertexColor);
-                mat4.scale(handSkin.transformation, handSize );
-                mat4.translate(handSkin.transformation, [0,2,0, 0,2,0, 0,2,0]);
-                mat4.rotate(handSkin.transformation, Math.PI/2, [0,0,0] );
+	                // Skin for the right shoulder: a band...
+	                var rightShoulderSkin = new SceneNode("rightShoulder skin", [band], prog_vertexColor);
+	                mat4.scale(rightShoulderSkin.transformation, shoulderSize );
+	                // Skeleton
+	                mat4.translate(rightShoulder.transformation, [-0.16,0.15,0, 0,0,0, 0,0,0]);
+	                mat4.rotate(rightShoulder.transformation, Math.PI/2, [0,0,1] );
+	                
+		                // Skin for the hand: a triangle...
+		                // TODO: ...
+		                var handSkin = new SceneNode("hand skin", [triangle], prog_vertexColor);
+		                mat4.scale(handSkin.transformation, handSize );
+		                mat4.translate(handSkin.transformation, [0,2,0, 0,2,0, 0,2,0]);
+		                mat4.rotate(handSkin.transformation, Math.PI/2, [0,0,0] );
                 
                 // connect skeleton + skin
                 head.addObjects([headSkin]);
