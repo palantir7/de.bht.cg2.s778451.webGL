@@ -167,6 +167,8 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
 		                mat4.scale(neckSkin.transformation, neckSize );
 		                mat4.translate(neckSkin.transformation, [0,2,0, 0,2,0, 0,2,0]);
 		                mat4.rotate(neckSkin.transformation, Math.PI/2, [0,0,0] );
+		                
+		            // --------------------------------------- >>>
                 
 	                // Skin for the left shoulder: a band...
 	                var leftShoulderSkin = new SceneNode("leftShoulder skin", [band], prog_vertexColor);
@@ -181,6 +183,8 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
 		                // Skeleton
 		                mat4.translate(leftUpperarm.transformation, [0.0,-0.05,0.15, 0,0,0, 0,0,0]);
 		                mat4.rotate(leftUpperarm.transformation, Math.PI/2, [1,0,0] );
+		                
+		            // --------------------------------------- >>>
                 
 	                // Skin for the right shoulder: a band...
 	                var rightShoulderSkin = new SceneNode("rightShoulder skin", [band], prog_vertexColor);
