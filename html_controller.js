@@ -36,10 +36,10 @@ define(["jquery"],
             var keyJointMap = {
                119: "worldX", 115: "-worldX", 
                 97: "worldY", 100: "-worldY", 
-               116: "leftArmX", 103: "-leftArmX", 
-               104: "leftArmY", 102: "-leftArmY", 
-               105: "leftElbowX", 107: "-leftElbowX", 
-               108: "leftElbowY", 106: "-leftElbowY", 
+               116: "ArmX", 103: "-ArmX", 
+               104: "ArmY", 102: "-ArmY", 
+               105: "ElbowX", 107: "-ElbowX", 
+               108: "ElbowY", 106: "-ElbowY", 
             };
             // Move by +5 deg or -5 deg depending on Shift key
             // Assumption: keycodes below 97 are with Shift. 
