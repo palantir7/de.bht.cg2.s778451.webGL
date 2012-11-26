@@ -411,7 +411,7 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
                 // rotate around Y with relative speed 3
                 scene.rotateJoint("worldY", 3*speed);
                 scene.rotateJoint("ArmY", 3*speed);
-                scene.rotateJoint("ElbowX", 3*speed);
+                scene.rotateJoint("-ElbowX", 3*speed);
             
                 // redraw
                 scene.draw();
