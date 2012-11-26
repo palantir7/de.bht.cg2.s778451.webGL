@@ -168,7 +168,7 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
 		                mat4.translate(neckSkin.transformation, [0,2,0, 0,2,0, 0,2,0]);
 		                mat4.rotate(neckSkin.transformation, Math.PI/2, [0,0,0] );
 		                
-		            // --------------------------------------- >>>
+		        // --------------------------------------- >>>
                 
 	                // Skin for the left shoulder: a band...
 	                var leftShoulderSkin = new SceneNode("leftShoulder skin", [band], prog_vertexColor);
@@ -212,7 +212,7 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
 						                mat4.translate(leftHand.transformation, [0,-0.05,0, 0,0,0, 0,0,0]);
 						                mat4.rotate(leftHand.transformation, Math.PI/2, [0,0,0] );
 		                
-		            // --------------------------------------- >>>
+		        // --------------------------------------- >>>
                 
 	                // Skin for the right shoulder: a band...
 	                var rightShoulderSkin = new SceneNode("rightShoulder skin", [band], prog_vertexColor);
@@ -255,6 +255,8 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
 						                // Skeleton
 						                mat4.translate(rightHand.transformation, [0,-0.05,0, 0,0,0, 0,0,0]);
 						                mat4.rotate(rightHand.transformation, Math.PI/2, [0,0,0] );
+		                
+		        // --------------------------------------- >>>
                 
                 // connect skeleton + skin
                 head.addObjects([headSkin]);
@@ -304,8 +306,48 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
                         case "worldY": 
                             mat4.rotate(this.world.transformation, angle, [0,1,0]);
                             break;
+                        case "-worldY": 
+                            mat4.rotate(this.world.transformation, angle, [0,-1,0]);
+                            break;
                         case "worldX": 
                             mat4.rotate(this.world.transformation, angle, [1,0,0]);
+                            break;
+                        case "-worldX": 
+                            mat4.rotate(this.world.transformation, angle, [-1,0,0]);
+                            break;   
+                                                
+                        case "leftArmX": 
+                            mat4.rotate(leftShoulder.transformation, angle, [0,1,0]);
+                            mat4.rotate(rightShoulder.transformation, angle, [0,1,0]);
+                            break;                      
+                        case "-leftArmX": 
+                            mat4.rotate(leftShoulder.transformation, angle, [0,-1,0]);
+                            mat4.rotate(rightShoulder.transformation, angle, [0,-1,0]);
+                            break;                       
+                        case "leftArmY": 
+                            mat4.rotate(leftShoulder.transformation, angle, [1,0,0]);
+                            mat4.rotate(rightShoulder.transformation, angle, [-1,0,0]);
+                            break;                      
+                        case "-leftArmY": 
+                            mat4.rotate(leftShoulder.transformation, angle, [-1,0,0]);
+                            mat4.rotate(rightShoulder.transformation, angle, [1,0,0]);
+                            break;  
+                                                
+                        case "leftElbowX": 
+                            mat4.rotate(leftElbow.transformation, angle, [0,1,0]);
+                            mat4.rotate(rightElbow.transformation, angle, [0,1,0]);
+                            break;                      
+                        case "-leftElbowX": 
+                            mat4.rotate(leftElbow.transformation, angle, [0,-1,0]);
+                            mat4.rotate(rightElbow.transformation, angle, [0,-1,0]);
+                            break;                       
+                        case "leftElbowY": 
+                            mat4.rotate(leftElbow.transformation, angle, [1,0,0]);
+                            mat4.rotate(rightElbow.transformation, angle, [-1,0,0]);
+                            break;                      
+                        case "-leftElbowY": 
+                            mat4.rotate(leftElbow.transformation, angle, [-1,0,0]);
+                            mat4.rotate(rightElbow.transformation, angle, [1,0,0]);
                             break;
                         default:
                             window.console.log("joint " + joint + " not implemented:");

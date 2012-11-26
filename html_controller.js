@@ -34,8 +34,12 @@ define(["jquery"],
             // which key corresponds to which joint
             // there are two keys for each joint: with Shift and without Shift pressed
             var keyJointMap = {
-                88: "worldX", 120: "worldX", 
-                89: "worldY", 121: "worldY", 
+               119: "worldX", 115: "-worldX", 
+                97: "worldY", 100: "-worldY", 
+               116: "leftArmX", 103: "-leftArmX", 
+               104: "leftArmY", 102: "-leftArmY", 
+               105: "leftElbowX", 107: "-leftElbowX", 
+               108: "leftElbowY", 106: "-leftElbowY", 
             };
             // Move by +5 deg or -5 deg depending on Shift key
             // Assumption: keycodes below 97 are with Shift. 
