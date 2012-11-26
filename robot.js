@@ -125,10 +125,10 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
                 var neckSize       	= [0.15, 0.15,  0.15 ];
                 
                 var handSize		= [0.15 ,0.15, 0.15 ];
-                var wristSize		= [0.5 , 0.5 ,  0.5 ];
-                var forearmSize		= [0.5 , 0.5 ,  0.5 ];
-                var elbowSize		= [0.5 , 0.5 ,  0.5 ];
-                var upperarmSize	= [0.30, 0.6 , 0.18 ];
+                var wristSize		= [0.13 ,0.05, 0.13 ];
+                var forearmSize		= [0.20, 0.6 , 0.18 ];
+                var elbowSize		= [0.15 ,0.10, 0.15 ];
+                var upperarmSize	= [0.20, 0.6 , 0.18 ];
                 var shoulderSize	= [0.15 ,0.15, 0.15 ];
                 
                 // skeleton for the torso - TODO connect shoulders and neck HERE                
@@ -174,15 +174,43 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
 	                var leftShoulderSkin = new SceneNode("leftShoulder skin", [band], prog_vertexColor);
 	                mat4.scale(leftShoulderSkin.transformation, shoulderSize );
 	                // Skeleton
-	                mat4.translate(leftShoulder.transformation, [0.16,0.15,0, 0,0,0, 0,0,0]);
+	                mat4.translate(leftShoulder.transformation, [0.18,0.15,0, 0,0,0, 0,0,0]);
 	                mat4.rotate(leftShoulder.transformation, Math.PI/2, [0,0,1] );
                 
-		                // Skin for the left upperarm: a band...
+		                // Skin for the left upperarm: a cube...
 		                var leftUpperarmSkin = new SceneNode("leftUpperarm skin", [cube], prog_vertexColor);
 		                mat4.scale(leftUpperarmSkin.transformation, upperarmSize );
 		                // Skeleton
-		                mat4.translate(leftUpperarm.transformation, [0.0,-0.05,0.15, 0,0,0, 0,0,0]);
+		                mat4.translate(leftUpperarm.transformation, [0,-0.03,0.15, 0,0,0, 0,0,0]);
 		                mat4.rotate(leftUpperarm.transformation, Math.PI/2, [1,0,0] );
+                
+			                // Skin for the left elbow: a band...
+			                var leftElbowSkin = new SceneNode("leftElbow skin", [band], prog_vertexColor);
+			                mat4.scale(leftElbowSkin.transformation, elbowSize );
+			                // Skeleton
+			                mat4.translate(leftElbow.transformation, [0,0.15,0, 0,0,0, 0,0,0]);
+			                mat4.rotate(leftElbow.transformation, Math.PI/2, [1,0,0] );
+                
+				                // Skin for the left forearm: a cube...
+				                var leftForearmSkin = new SceneNode("leftForearm skin", [cube], prog_vertexColor);
+				                mat4.scale(leftForearmSkin.transformation, forearmSize );
+				                // Skeleton
+				                mat4.translate(leftForearm.transformation, [0,0,-0.15, 0,0,0, 0,0,0]);
+				                mat4.rotate(leftForearm.transformation, Math.PI/2, [1,0,0] );
+                
+					                // Skin for the left elbow: a band...
+					                var leftWristSkin = new SceneNode("leftWrist skin", [band], prog_vertexColor);
+					                mat4.scale(leftWristSkin.transformation, wristSize );
+					                // Skeleton
+					                mat4.translate(leftWrist.transformation, [0,-0.16,0, 0,0,0, 0,0,0]);
+					                mat4.rotate(leftWrist.transformation, Math.PI/2, [0,0,0] );
+                
+						                // Skin for the left elbow: a band...
+						                var leftHandSkin = new SceneNode("leftHand skin", [triangle], prog_vertexColor);
+						                mat4.scale(leftHandSkin.transformation, handSize );
+						                // Skeleton
+						                mat4.translate(leftHand.transformation, [0,-0.05,0, 0,0,0, 0,0,0]);
+						                mat4.rotate(leftHand.transformation, Math.PI/2, [0,0,0] );
 		                
 		            // --------------------------------------- >>>
                 
@@ -190,15 +218,43 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
 	                var rightShoulderSkin = new SceneNode("rightShoulder skin", [band], prog_vertexColor);
 	                mat4.scale(rightShoulderSkin.transformation, shoulderSize );
 	                // Skeleton
-	                mat4.translate(rightShoulder.transformation, [-0.16,0.15,0, 0,0,0, 0,0,0]);
+	                mat4.translate(rightShoulder.transformation, [-0.18,0.15,0, 0,0,0, 0,0,0]);
 	                mat4.rotate(rightShoulder.transformation, Math.PI/2, [0,0,1] );
-	                
-		                // Skin for the hand: a triangle...
-		                // TODO: ...
-		                var handSkin = new SceneNode("hand skin", [triangle], prog_vertexColor);
-		                mat4.scale(handSkin.transformation, handSize );
-		                mat4.translate(handSkin.transformation, [0,2,0, 0,2,0, 0,2,0]);
-		                mat4.rotate(handSkin.transformation, Math.PI/2, [0,0,0] );
+                
+		                // Skin for the right upperarm: a cube...
+		                var rightUpperarmSkin = new SceneNode("rightUpperarm skin", [cube], prog_vertexColor);
+		                mat4.scale(rightUpperarmSkin.transformation, upperarmSize );
+		                // Skeleton
+		                mat4.translate(rightUpperarm.transformation, [0,0.03,0.15, 0,0,0, 0,0,0]);
+		                mat4.rotate(rightUpperarm.transformation, Math.PI/2, [1,0,0] );
+                
+			                // Skin for the right elbow: a band...
+			                var rightElbowSkin = new SceneNode("rightElbow skin", [band], prog_vertexColor);
+			                mat4.scale(rightElbowSkin.transformation, elbowSize );
+			                // Skeleton
+			                mat4.translate(rightElbow.transformation, [0,0.15,0, 0,0,0, 0,0,0]);
+			                mat4.rotate(rightElbow.transformation, Math.PI/2, [1,0,0] );
+                
+				                // Skin for the right forearm: a cube...
+				                var rightForearmSkin = new SceneNode("rightForearm skin", [cube], prog_vertexColor);
+				                mat4.scale(rightForearmSkin.transformation, forearmSize );
+				                // Skeleton
+				                mat4.translate(rightForearm.transformation, [0,0,-0.15, 0,0,0, 0,0,0]);
+				                mat4.rotate(rightForearm.transformation, Math.PI/2, [1,0,0] );
+                
+					                // Skin for the right elbow: a band...
+					                var rightWristSkin = new SceneNode("rightWrist skin", [band], prog_vertexColor);
+					                mat4.scale(rightWristSkin.transformation, wristSize );
+					                // Skeleton
+					                mat4.translate(rightWrist.transformation, [0,-0.16,0, 0,0,0, 0,0,0]);
+					                mat4.rotate(rightWrist.transformation, Math.PI/2, [0,0,0] );
+                
+						                // Skin for the right elbow: a band...
+						                var rightHandSkin = new SceneNode("rightHand skin", [triangle], prog_vertexColor);
+						                mat4.scale(rightHandSkin.transformation, handSize );
+						                // Skeleton
+						                mat4.translate(rightHand.transformation, [0,-0.05,0, 0,0,0, 0,0,0]);
+						                mat4.rotate(rightHand.transformation, Math.PI/2, [0,0,0] );
                 
                 // connect skeleton + skin
                 head.addObjects([headSkin]);
@@ -208,8 +264,17 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
                 
                 leftShoulder.addObjects([leftShoulderSkin]);
                 leftUpperarm.addObjects([leftUpperarmSkin]);
+                leftElbow.addObjects([leftElbowSkin]);
+                leftForearm.addObjects([leftForearmSkin]);
+                leftWrist.addObjects([leftWristSkin]);
+                leftHand.addObjects([leftHandSkin]);
                 
                 rightShoulder.addObjects([rightShoulderSkin]);
+                rightUpperarm.addObjects([rightUpperarmSkin]);
+                rightElbow.addObjects([rightElbowSkin]);
+                rightForearm.addObjects([rightForearmSkin]);
+                rightWrist.addObjects([rightWristSkin]);
+                rightHand.addObjects([rightHandSkin]);
                                 
                 // an entire robot
                 var robot1  = new SceneNode("robot1", [torso]);
