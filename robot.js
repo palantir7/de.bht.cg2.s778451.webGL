@@ -131,7 +131,7 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
                 var upperarmSize	= [0.20, 0.6 , 0.18 ];
                 var shoulderSize	= [0.15 ,0.15, 0.15 ];
                 
-                // skeleton for the torso - TODO connect shoulders and neck HERE                
+                // skeleton for the robot               
                 var leftHand = new SceneNode("leftHand");
                 var leftWrist = new SceneNode("leftWrist", [leftHand]);
                 var leftForearm = new SceneNode("leftForearm", [leftWrist]);
@@ -296,7 +296,7 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
                  */
                 this.rotateJoint = function(joint, angle) {
                 
-                    window.console.log("rotating " + joint + " by " + angle + " degrees." );
+                   //window.console.log("rotating " + joint + " by " + angle + " degrees." );
                     
                     // degrees to radians
                     angle = angle*Math.PI/180;
@@ -348,7 +348,16 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
                         case "-ElbowY": 
                             mat4.rotate(leftElbow.transformation, angle, [-1,0,0]);
                             mat4.rotate(rightElbow.transformation, angle, [1,0,0]);
-                            break;
+                            break; 
+                                                
+                        case "WristX": 
+                            mat4.rotate(leftWrist.transformation, angle, [0,1,0]);
+                            mat4.rotate(rightWrist.transformation, angle, [0,1,0]);
+                            break;                      
+                        case "-WristX": 
+                            mat4.rotate(leftWrist.transformation, angle, [0,-1,0]);
+                            mat4.rotate(rightWrist.transformation, angle, [0,-1,0]);
+                            break;      
                             
                         default:
                             window.console.log("joint " + joint + " not implemented:");
@@ -400,6 +409,9 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
             var scene = new MyRobotScene(gl);
             scene.draw();
             
+	        var control = 0;
+	        var backward = false;            
+            
             // create an animation: rotate some joints
             var animation = new Animation( (function(t,deltaT) {
             
@@ -408,10 +420,32 @@ define(["jquery", "gl-matrix", "util", "webgl-debug",
                 // speed  times deltaT
                 var speed = deltaT/1000*this.customSpeed;
                 
+                window.console.log("cntl " + control + " backward " + backward );
+                
                 // rotate around Y with relative speed 3
                 scene.rotateJoint("worldY", 3*speed);
-                scene.rotateJoint("ArmY", 3*speed);
-                scene.rotateJoint("-ElbowX", 3*speed);
+                                
+				if (!backward) {
+	                scene.rotateJoint("ArmY", 4*speed);
+	                scene.rotateJoint("-ElbowX", 3*speed);
+	                scene.rotateJoint("WristX", 6*speed);
+	                
+	                control = control + 3*speed;
+	                
+	                if (control > 75) {
+	                	backward = true;
+	                }
+                } else {
+	                scene.rotateJoint("-ArmY", 4*speed);
+	                scene.rotateJoint("ElbowX", 3*speed);
+	                scene.rotateJoint("-WristX", 6*speed);
+	                
+	                control = control - 3*speed;
+	                
+	                if (control < 0) {
+	                	backward = false;
+	                }
+                }
             
                 // redraw
                 scene.draw();
